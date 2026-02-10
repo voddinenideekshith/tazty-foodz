@@ -4,10 +4,10 @@ const menuData = {
       name: "Pizzas (Regular 8\")",
       slug: "pizzas",
       items: [
-        { id: "p1", name: "Veg Pizza", price: 149, veg: true, spice: "medium", options: ["mild", "medium", "spicy"], available: true },
-        { id: "p2", name: "Cheese / Margherita", price: 169, veg: true, spice: "mild", available: true },
-        { id: "p3", name: "Extra Cheese", price: 189, veg: true, spice: "mild", addons: [{ name: "Extra cheese", price: 30 }], available: true },
-        { id: "p4", name: "Chicken Pizza", price: 199, veg: false, spice: "medium", options: ["mild", "medium", "spicy"], available: true }
+        { id: "p1", name: "Veg Pizza", price: 199, veg: true, spice: "medium", options: ["mild", "medium", "spicy"], available: true },
+        { id: "p2", name: "Cheese / Margherita", price: 219, veg: true, spice: "mild", available: true },
+        { id: "p3", name: "Extra Cheese", price: 239, veg: true, spice: "mild", addons: [{ name: "Extra cheese", price: 30 }], available: true },
+        { id: "p4", name: "Chicken Pizza", price: 249, veg: false, spice: "medium", options: ["mild", "medium", "spicy"], available: true }
       ]
     },
     {
@@ -73,8 +73,9 @@ const menuData = {
 const MIN_ORDER = 199;
 const FREE_DELIVERY_THRESHOLD = 299;
 const BASE_DELIVERY_FEE = 30;
-const API_BASE = "http://localhost:4000";
-let razorpayKey = "";
+// Backend removed: operate entirely on client-side static data
+const API_BASE = "";
+
 
 const state = {
   activeCategory: menuData.categories[0].slug,
@@ -104,29 +105,9 @@ function formatCurrency(n) {
   return "Rs " + Number(n || 0).toFixed(0);
 }
 
-async function fetchMenu() {
-  try {
-    const res = await fetch(API_BASE + "/api/menu");
-    if (!res.ok) throw new Error("Menu fetch failed");
-    const data = await res.json();
-    if (data.items) {
-      menuData.categories = buildCategoriesFromItems(data.items);
-    }
-  } catch (err) {
-    console.warn("Using local menu fallback", err.message);
-  }
-}
-
-async function fetchConfig() {
-  try {
-    const res = await fetch(API_BASE + "/api/config");
-    if (!res.ok) return;
-    const body = await res.json();
-    razorpayKey = body.razorpayKey || "";
-  } catch (err) {
-    console.warn("Config fetch failed", err.message);
-  }
-}
+// No remote backend — these are no-op placeholders to preserve init flow
+async function fetchMenu() { return Promise.resolve(); }
+async function fetchConfig() { return Promise.resolve(); }
 
 function buildCategoriesFromItems(items) {
   const groups = {
@@ -317,86 +298,23 @@ async function handleCheckoutSubmit(e) {
   };
 
   try {
-    const res = await fetch(API_BASE + "/api/orders/create", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    });
-
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      throw new Error(err.error || "Order create failed");
-    }
-
-    const body = await res.json();
-    state.orderId = body.orderId;
-
-    if (payment === "prepaid") {
-      await launchRazorpay(body);
-    } else {
-      hideModal(checkoutModal);
-      startStatusFlow(body.orderId, payment);
-      state.cart = [];
-      updateCart();
-      closeCart();
-    }
+    // Create a local-order simulation (no backend)
+    const localOrderId = generateOrderId();
+    state.orderId = localOrderId;
+    hideModal(checkoutModal);
+    startStatusFlow(localOrderId, payment);
+    state.cart = [];
+    updateCart();
+    closeCart();
   } catch (err) {
-    alert(err.message || "Payment failed");
+    alert(err.message || "Order failed");
   } finally {
     placeOrderBtn.disabled = false;
     placeOrderBtn.textContent = "Place order";
   }
 }
 
-async function launchRazorpay(orderPayload) {
-  if (!window.Razorpay) {
-    alert("Razorpay SDK not loaded");
-    return;
-  }
-
-  return new Promise((resolve, reject) => {
-    const options = {
-      key: razorpayKey,
-      amount: orderPayload.amount,
-      currency: orderPayload.currency || "INR",
-      name: "Slice & Spice",
-      description: "Order payment",
-      order_id: orderPayload.razorpayOrderId,
-      handler: async function (response) {
-        try {
-          const verifyRes = await fetch(API_BASE + "/api/payments/verify", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(response)
-          });
-          if (!verifyRes.ok) throw new Error("Verification failed");
-          const verifyBody = await verifyRes.json();
-          hideModal(checkoutModal);
-          startStatusFlow(orderPayload.orderId, "prepaid");
-          state.cart = [];
-          updateCart();
-          closeCart();
-          resolve(verifyBody);
-        } catch (err) {
-          alert(err.message || "Payment verification failed");
-          reject(err);
-        }
-      },
-      modal: {
-        ondismiss: function () {
-          reject(new Error("Payment cancelled"));
-        }
-      },
-      prefill: {
-        name: document.querySelector("[name='name']")?.value || "",
-        contact: document.querySelector("[name='phone']")?.value || ""
-      }
-    };
-
-    const rzp = new Razorpay(options);
-    rzp.open();
-  });
-}
+// Razorpay/payment removed — payments are simulated locally in `handleCheckoutSubmit`.
 
 function startStatusFlow(orderId, payment) {
   statusNumber.textContent = orderId + " - " + (payment === "cod" ? "COD" : "Prepaid");

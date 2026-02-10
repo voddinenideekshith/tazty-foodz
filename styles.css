@@ -1,17 +1,19 @@
 
 :root {
-  --bg: #fff9f5;
-  --surface: #ffffff;
-  --surface-alt: #fff1e8;
-  --text: #222;
-  --muted: #5d5d5d;
-  --primary: #ff5a2c;
-  --primary-dark: #e94b1f;
-  --swiggy: #fc8019;
-  --zomato: #e23744;
-  --whatsapp: #1db954;
-  --radius: 16px;
-  --shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  /* Slate Teal — Calm, professional, minimal */
+  --bg: #f6f8fa;           /* very light cool background */
+  --surface: #ffffff;      /* card / surface */
+  --surface-alt: #f3f6f8;  /* subtle alt surface */
+  --text: #0b1b2b;         /* deep slate for text */
+  --muted: #566277;        /* muted slate for secondary text */
+  --primary: #0b7285;      /* slate-teal primary accent */
+  --primary-dark: #095a6f; /* darker accent for hover */
+  /* partner badges left readable but slightly muted for minimal look */
+  --swiggy: #d97a2a;
+  --zomato: #c83a3a;
+  --whatsapp: #16a34a;
+  --radius: 12px;
+  --shadow: 0 8px 20px rgba(11, 27, 43, 0.06);
 }
 
 * {
@@ -100,8 +102,8 @@ body {
 .hero {
   padding: 4.5rem 0 3rem;
   background:
-    radial-gradient(circle at 20% 20%, #ffe1d2 0, transparent 45%),
-    radial-gradient(circle at 80% 0%, #ffeec6 0, transparent 38%);
+    radial-gradient(circle at 20% 20%, rgba(11,114,133,0.06) 0, transparent 40%),
+    radial-gradient(circle at 80% 0%, rgba(11,114,133,0.04) 0, transparent 35%);
 }
 
 .hero-grid {
@@ -163,6 +165,19 @@ h1 {
   transform: translateY(-1px);
 }
 
+/* stronger contrast for primary buttons */
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(11,27,43,0.08);
+  border-radius: 12px;
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px) scale(1.02);
+}
+
 .btn-primary {
   background: var(--primary);
   color: #fff;
@@ -177,16 +192,44 @@ h1 {
 .btn-swiggy {
   background: var(--swiggy);
   color: #fff;
+  box-shadow: 0 6px 18px rgba(217,122,42,0.08);
+  border-radius: 10px;
 }
 
 .btn-zomato {
   background: var(--zomato);
   color: #fff;
+  box-shadow: 0 6px 18px rgba(200,58,58,0.08);
+  border-radius: 10px;
 }
 
 .btn-whatsapp {
   background: var(--whatsapp);
   color: #fff;
+  box-shadow: 0 6px 18px rgba(16,163,74,0.08);
+  border-radius: 10px;
+}
+
+/* subtle pulse animation for order buttons */
+@keyframes subtlePulse {
+  0% { transform: translateY(0) scale(1); box-shadow: 0 6px 18px rgba(11,27,43,0.06); }
+  50% { transform: translateY(-2px) scale(1.02); box-shadow: 0 10px 24px rgba(11,27,43,0.09); }
+  100% { transform: translateY(0) scale(1); box-shadow: 0 6px 18px rgba(11,27,43,0.06); }
+}
+
+/* apply animations */
+.header-cta, .btn-whatsapp, .btn-swiggy, .btn-zomato, .btn-outline, .btn-primary {
+  will-change: transform;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.header-cta.animate, .btn-whatsapp.animate, .btn-swiggy.animate, .btn-zomato.animate, .btn-outline.animate, .btn-primary.animate {
+  animation: subtlePulse 2200ms ease-in-out infinite;
+}
+
+.header-cta:hover, .btn-whatsapp:hover, .btn-swiggy:hover, .btn-zomato:hover {
+  animation: none;
+  transform: translateY(-3px) scale(1.03);
 }
 
 .hero-card {
