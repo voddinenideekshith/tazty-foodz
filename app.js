@@ -73,6 +73,7 @@ const menuData = {
         { id: "r3", name: "Curd bowl", price: 39, veg: true, available: true }
         ,{ id: "r4", name: "Tomato Rice", price: 89, veg: true, available: true }
         ,{ id: "r5", name: "Fried Rice", price: 129, veg: true, spice: "mild", available: true }
+        ,{ id: "r6", name: "Egg Fried Rice", price: 149, veg: false, spice: "mild", available: true }
       ]
     },
     {
