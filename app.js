@@ -20,6 +20,14 @@ const menuData = {
       ]
     },
     {
+      name: "Chicken Curries",
+      slug: "chicken-curries",
+      items: [
+        { id: "cc1", name: "Bagara Rice with Chicken Curry", price: 179, veg: false, available: true },
+        { id: "cc2", name: "Chicken Biryani", price: 219, veg: false, available: true }
+      ]
+    },
+    {
       name: "Sides & Starters",
       slug: "sides",
       items: [
@@ -27,7 +35,11 @@ const menuData = {
         { id: "s2", name: "Chicken Soup", price: 129, veg: false, available: true },
         { id: "s3", name: "Chicken Roast Fry (quarter)", price: 189, veg: false, spice: "spicy", available: true },
         { id: "s4", name: "Egg Fry (2)", price: 59, veg: false, spice: "medium", available: true },
+        { id: "s9", name: "Omelette", price: 59, veg: false, available: true },
         { id: "s5", name: "Boiled Egg (2)", price: 39, veg: false, available: true }
+        ,{ id: "s6", name: "Chicken Shawarma", price: 179, veg: false, available: true },
+        { id: "s7", name: "Chicken Frankie", price: 139, veg: false, available: true },
+        { id: "s8", name: "Egg Frankie", price: 99, veg: false, available: true }
       ]
     },
     {
@@ -36,6 +48,7 @@ const menuData = {
       items: [
         { id: "m1", name: "Plain Maggi", price: 69, veg: true, available: true },
         { id: "m2", name: "Egg Maggi", price: 89, veg: false, spice: "medium", available: true }
+        ,{ id: "m3", name: "Paneer Maggi", price: 109, veg: true, available: true }
       ]
     },
     {
@@ -46,7 +59,9 @@ const menuData = {
         { id: "b2", name: "Rumali Roti", price: 29, veg: true, available: true },
         { id: "b3", name: "Chapathi (2)", price: 35, veg: true, available: true },
         { id: "d1", name: "Tomato Sauce dip", price: 10, veg: true, available: true },
-        { id: "d2", name: "Mayonnaise dip", price: 15, veg: true, available: true }
+        { id: "d2", name: "Mayonnaise dip", price: 15, veg: true, available: true },
+        { id: "d3", name: "Extra Chilli Flakes (per pack)", price: 10, veg: true, available: true },
+        { id: "d4", name: "Extra Oregano (per pack)", price: 10, veg: true, available: true }
       ]
     },
     {
@@ -56,6 +71,8 @@ const menuData = {
         { id: "r1", name: "Pulihora", price: 89, veg: true, spice: "medium", available: true },
         { id: "r2", name: "Curd Rice", price: 79, veg: true, spice: "mild", available: true },
         { id: "r3", name: "Curd bowl", price: 39, veg: true, available: true }
+        ,{ id: "r4", name: "Tomato Rice", price: 89, veg: true, available: true }
+        ,{ id: "r5", name: "Fried Rice", price: 129, veg: true, spice: "mild", available: true }
       ]
     },
     {
@@ -65,6 +82,20 @@ const menuData = {
         { id: "dr1", name: "Tea", price: 20, veg: true, available: true },
         { id: "dr2", name: "Boost (hot/cold)", price: 30, veg: true, available: true },
         { id: "dr3", name: "Gulab Jamun (2 pcs)", price: 40, veg: true, available: true }
+        ,{ id: "dr4", name: "Chai Biscuits", price: 30, veg: true, available: true },
+        { id: "dr5", name: "Popcorn (Small) - Cheese", price: 50, veg: true, available: true },
+        { id: "dr6", name: "Popcorn (Small) - Masala", price: 50, veg: true, available: true },
+        { id: "dr7", name: "Popcorn (Small) - Salty", price: 50, veg: true, available: true },
+        { id: "dr8", name: "Popcorn (Medium) - Cheese", price: 80, veg: true, available: true },
+        { id: "dr9", name: "Popcorn (Medium) - Masala", price: 80, veg: true, available: true },
+        { id: "dr10", name: "Popcorn (Medium) - Salty", price: 80, veg: true, available: true },
+        { id: "dr11", name: "Popcorn (Large) - Cheese", price: 120, veg: true, available: true },
+        { id: "dr12", name: "Popcorn (Large) - Masala", price: 120, veg: true, available: true },
+        { id: "dr13", name: "Popcorn (Large) - Salty", price: 120, veg: true, available: true }
+        ,{ id: "dr14", name: "Coffee", price: 30, veg: true, available: true }
+        ,{ id: "dr15", name: "Black Coffee", price: 25, veg: true, available: true }
+        ,{ id: "dr16", name: "Milk", price: 25, veg: true, available: true }
+        ,{ id: "dr17", name: "Horlicks", price: 40, veg: true, available: true }
       ]
     }
   ]
