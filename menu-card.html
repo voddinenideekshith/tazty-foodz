@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tazty Foodz - Menu Card</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #fff5f0 0%, #ffe8dc 100%);
+            padding: 20px;
+            color: #333;
+        }
+
+        .menu-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .menu-header {
+            background: linear-gradient(135deg, #ff5a2c 0%, #ff7a4d 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .menu-header h1 {
+            font-size: 3em;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .menu-header .tagline {
+            font-size: 1.2em;
+            font-weight: 500;
+            opacity: 0.95;
+        }
+
+        .menu-header .location {
+            font-size: 1em;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+
+        .menu-header .contact {
+            margin-top: 15px;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+
+        .menu-content {
+            padding: 40px 30px;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .category {
+            background: #fff;
+            border: 2px solid #ff5a2c;
+            border-radius: 15px;
+            padding: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(255, 90, 44, 0.2);
+        }
+
+        .category h2 {
+            color: #ff5a2c;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #ff5a2c;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .category ul {
+            list-style: none;
+        }
+
+        .category li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px dashed #e0e0e0;
+            font-size: 1.05em;
+        }
+
+        .category li:last-child {
+            border-bottom: none;
+        }
+
+        .item-name {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .item-price {
+            font-weight: 700;
+            color: #ff5a2c;
+            font-size: 1.1em;
+        }
+
+        .menu-footer {
+            background: #f8f8f8;
+            padding: 30px;
+            text-align: center;
+            border-top: 3px solid #ff5a2c;
+        }
+
+        .menu-footer h3 {
+            color: #ff5a2c;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .menu-footer p {
+            margin: 8px 0;
+            font-size: 1.05em;
+        }
+
+        .delivery-badges {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: #ff5a2c;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        .assurance {
+            background: #fff5f0;
+            border-left: 4px solid #ff5a2c;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+            font-style: italic;
+            color: #666;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .menu-container {
+                box-shadow: none;
+                border-radius: 0;
+            }
+            
+            .category {
+                break-inside: avoid;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-header h1 {
+                font-size: 2em;
+            }
+            
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="menu-container">
+        <div class="menu-header">
+            <h1>🍕 TAZTY FOODZ 🍕</h1>
+            <div class="tagline">Fast, Fresh & Delicious</div>
+            <div class="location">📍 Cloud Kitchen in Hayath Nagar, Telangana</div>
+            <div class="contact">📞 +91 89855 62963 | 💬 WhatsApp Orders Available</div>
+        </div>
+
+        <div class="menu-content">
+            <div class="assurance">
+                ✅ Fresh ingredients • Hygienic kitchen • Sealed packaging • Quality guaranteed
+            </div>
+
+            <div class="menu-grid">
+                <div class="category">
+                    <h2>🍕 Pizza</h2>
+                    <ul>
+                        <li><span class="item-name">Chicken Pizza</span><span class="item-price">₹249</span></li>
+                        <li><span class="item-name">Extra Cheese Pizza</span><span class="item-price">₹229</span></li>
+                        <li><span class="item-name">Paneer Pizza</span><span class="item-price">₹239</span></li>
+                        <li><span class="item-name">Extra Spicy Pizza</span><span class="item-price">₹229</span></li>
+                        <li><span class="item-name">Egg Pizza</span><span class="item-price">₹219</span></li>
+                        <li><span class="item-name">Corn Pizza</span><span class="item-price">₹209</span></li>
+                        <li><span class="item-name">Veg Pizza</span><span class="item-price">₹199</span></li>
+                    </ul>
+                </div>
+
+                <div class="category">
+                    <h2>🍝 Pasta</h2>
+                    <ul>
+                        <li><span class="item-name">Special Pasta</span><span class="item-price">₹189</span></li>
+                        <li><span class="item-name">Pink Sauce Pasta</span><span class="item-price">₹169</span></li>
+                        <li><span class="item-name">White Sauce Pasta</span><span class="item-price">₹159</span></li>
+                        <li><span class="item-name">Red Sauce Pasta</span><span class="item-price">₹149</span></li>
+                    </ul>
+                </div>
+
+                <div class="category">
+                    <h2>🍗 Chicken Specials</h2>
+                    <ul>
+                        <li><span class="item-name">Chicken Biryani</span><span class="item-price">₹219</span></li>
+                        <li><span class="item-name">Chicken Roast Fry</span><span class="item-price">₹189</span></li>
+                        <li><span class="item-name">Bagara Rice with Chicken Curry</span><span class="item-price">₹179</span></li>
+                        <li><span class="item-name">Chicken Shawarma</span><span class="item-price">₹179</span></li>
+                        <li><span class="item-name">Chicken Frankie</span><span class="item-price">₹139</span></li>
+                        <li><span class="item-name">Chicken Soup</span><span class="item-price">₹129</span></li>
+                    </ul>
+                </div>
+
+                <div class="category">
+                    <h2>🍜 Maggie</h2>
+                    <ul>
+                        <li><span class="item-name">Special Maggie</span><span class="item-price">₹119</span></li>
+                        <li><span class="item-name">Paneer Maggie</span><span class="item-price">₹109</span></li>
+                        <li><span class="item-name">Cheese Maggie</span><span class="item-price">₹99</span></li>
+                        <li><span class="item-name">Egg Maggie</span><span class="item-price">₹89</span></li>
+                        <li><span class="item-name">Plain Maggie</span><span class="item-price">₹69</span></li>
+                    </ul>
+                </div>
+
+                <div class="category">
+                    <h2>🍚 Rice & Meals</h2>
+                    <ul>
+                        <li><span class="item-name">Egg Fried Rice</span><span class="item-price">₹149</span></li>
+                        <li><span class="item-name">Fried Rice</span><span class="item-price">₹129</span></li>
+                        <li><span class="item-name">Tomato Rice</span><span class="item-price">₹89</span></li>
+                        <li><span class="item-name">Curd Rice</span><span class="item-price">₹79</span></li>
+                    </ul>
+                </div>
+
+                <div class="category">
+                    <h2>🍟 Sides & Starters</h2>
+                    <ul>
+                        <li><span class="item-name">Egg Frankie</span><span class="item-price">₹99</span></li>
+                        <li><span class="item-name">French Fries</span><span class="item-price">₹89</span></li>
+                        <li><span class="item-name">Egg Fry (2 pcs)</span><span class="item-price">₹59</span></li>
+                        <li><span class="item-name">Omelette</span><span class="item-price">₹59</span></li>
+                    </ul>
+                </div>
+
+                <div class="category">
+                    <h2>🫓 Breads & Extras</h2>
+                    <ul>
+                        <li><span class="item-name">Chapathi (2 pcs)</span><span class="item-price">₹49</span></li>
+                        <li><span class="item-name">Bread Jam</span><span class="item-price">₹39</span></li>
+                        <li><span class="item-name">Mayonnaise (dip)</span><span class="item-price">₹15</span></li>
+                        <li><span class="item-name">Tomato Sauce (dip)</span><span class="item-price">₹10</span></li>
+                        <li><span class="item-name">Extra Chilli Flakes (per pack)</span><span class="item-price">₹10</span></li>
+                        <li><span class="item-name">Extra Oregano (per pack)</span><span class="item-price">₹10</span></li>
+                    </ul>
+                </div>
+
+                <div class="category">
+                    <h2>🍿 Popcorn</h2>
+                    <ul>
+                        <li><span class="item-name">Large (Cheese/Masala/Salty)</span><span class="item-price">₹120</span></li>
+                        <li><span class="item-name">Medium (Cheese/Masala/Salty)</span><span class="item-price">₹80</span></li>
+                        <li><span class="item-name">Small (Cheese/Masala/Salty)</span><span class="item-price">₹50</span></li>
+                    </ul>
+                </div>
+
+                <div class="category">
+                    <h2>🥤 Beverages</h2>
+                    <ul>
+                        <li><span class="item-name">Pepsi / Thums Up / Sprite / Maaza</span><span class="item-price">₹40</span></li>
+                        <li><span class="item-name">Horlicks</span><span class="item-price">₹40</span></li>
+                        <li><span class="item-name">Coffee</span><span class="item-price">₹30</span></li>
+                        <li><span class="item-name">Boost (hot/cold)</span><span class="item-price">₹30</span></li>
+                        <li><span class="item-name">Chai Biscuits</span><span class="item-price">₹30</span></li>
+                        <li><span class="item-name">Black Coffee</span><span class="item-price">₹25</span></li>
+                        <li><span class="item-name">Milk</span><span class="item-price">₹25</span></li>
+                        <li><span class="item-name">Water Bottle</span><span class="item-price">₹20</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu-footer">
+            <h3>🚀 Order Now!</h3>
+            <p><strong>Phone:</strong> +91 89855 62963</p>
+            <p><strong>Email:</strong> deekshithvoddineni@gmail.com</p>
+            <p><strong>Address:</strong> Vijay Nagar Colony, Road No. 4, Hayath Nagar, Telangana</p>
+            
+            <div class="delivery-badges">
+                <span class="badge">📱 Direct Order</span>
+                <span class="badge">🛵 Swiggy Partner</span>
+                <span class="badge">🍽️ Zomato Partner</span>
+                <span class="badge">📦 5km Delivery</span>
+            </div>
+            
+            <p style="margin-top: 20px; font-size: 0.9em; color: #666;">
+                Visit us online: <strong>taztyfoodz.com</strong>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
