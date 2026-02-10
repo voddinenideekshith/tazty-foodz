@@ -85,7 +85,7 @@
               <a class="btn btn-swiggy animate" href="https://www.swiggy.com/" target="_blank" rel="noopener">Order on Swiggy</a>
               <a class="btn btn-zomato animate" href="https://www.zomato.com/" target="_blank" rel="noopener">Order on Zomato</a>
               <a class="btn btn-outline animate" href="tel:+918985562963">Call to Order</a>
-              <a class="btn btn-whatsapp animate" href="https://wa.me/918985562963" target="_blank" rel="noopener">WhatsApp Order</a>
+              <a id="hero-wa-order" class="btn btn-whatsapp animate" href="javascript:void(0)" onclick="orderViaWhatsApp()">WhatsApp Order</a>
             </div>
           </div>
           <div class="hero-card" aria-label="Popular dishes preview">
@@ -260,7 +260,7 @@
             </p>
             <div class="hero-ctas compact">
               <a class="btn btn-primary animate" href="tel:+918985562963">Call to Order</a>
-              <a class="btn btn-whatsapp animate" href="https://wa.me/918985562963" target="_blank" rel="noopener">WhatsApp Order</a>
+              <a class="btn btn-whatsapp animate" href="javascript:void(0)" onclick="orderViaWhatsApp()">WhatsApp Order</a>
             </div>
           </div>
           <div class="map-wrap">
@@ -288,5 +288,34 @@
 
     <script src="app.js"></script>
     <script src="script.js"></script>
+    <!-- WhatsApp order modal -->
+    <div id="wa-modal" class="modal" aria-hidden="true">
+      <div class="modal-dialog">
+        <button id="wa-close" class="modal-close" aria-label="Close">×</button>
+        <h3>Send order via WhatsApp</h3>
+        <form id="wa-form">
+          <label class="field">
+            <span>Name (optional)</span>
+            <input type="text" id="wa-name" name="name" placeholder="Your name" />
+          </label>
+          <label class="field">
+            <span>Phone (optional)</span>
+            <input type="tel" id="wa-phone" name="phone" placeholder="Phone number" />
+          </label>
+          <label class="field">
+            <span>Address (optional)</span>
+            <textarea id="wa-address" name="address" rows="2" placeholder="Delivery address"></textarea>
+          </label>
+          <label class="field">
+            <span>Order preview</span>
+            <textarea id="wa-preview" readonly rows="6"></textarea>
+          </label>
+          <div class="modal-actions">
+            <button type="button" id="wa-send" class="btn btn-whatsapp">Send WhatsApp</button>
+            <button type="button" id="wa-cancel" class="btn btn-outline">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </body>
 </html>

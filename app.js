@@ -99,7 +99,76 @@ const menuData = {
         ,{ id: "dr17", name: "Horlicks", price: 40, veg: true, available: true }
       ]
     }
-  ]
+
+  // WhatsApp ordering flow: build a prefilled message and open wa.me link
+  function generateWhatsAppMessage(name, phone, address) {
+    if (!state.cart.length) return "";
+    let lines = [];
+    lines.push("Tazty Foodz - New Order");
+    lines.push("");
+    state.cart.forEach(item => {
+      lines.push(`${item.qty} x ${item.name} - Rs ${item.price * item.qty}`);
+    });
+    const subtotal = state.cart.reduce((s, it) => s + it.price * it.qty, 0);
+    const delivery = subtotal >= FREE_DELIVERY_THRESHOLD ? 0 : state.cart.length ? BASE_DELIVERY_FEE : 0;
+    const total = subtotal + delivery;
+    lines.push("");
+    lines.push(`Subtotal: Rs ${subtotal}`);
+    lines.push(`Delivery: Rs ${delivery}`);
+    lines.push(`Total: Rs ${total}`);
+    if (name) lines.push("");
+    if (name) lines.push(`Name: ${name}`);
+    if (phone) lines.push(`Phone: ${phone}`);
+    if (address) lines.push(`Address: ${address}`);
+    lines.push("");
+    lines.push("Please confirm. Thanks!");
+    return lines.join("\n");
+  }
+
+  function orderViaWhatsApp() {
+    // replaced by modal flow — call openWhatsAppModal instead
+    openWhatsAppModal();
+  }
+
+  // open the in-page WhatsApp modal and prefills the preview
+  function openWhatsAppModal() {
+    if (!state.cart.length) {
+      alert("Your cart is empty. Please add items before ordering on WhatsApp.");
+      return;
+    }
+    const modal = document.getElementById("wa-modal");
+    if (!modal) return;
+    const nameEl = document.getElementById("wa-name");
+    const phoneEl = document.getElementById("wa-phone");
+    const addrEl = document.getElementById("wa-address");
+    const preview = document.getElementById("wa-preview");
+    if (nameEl) nameEl.value = "";
+    if (phoneEl) phoneEl.value = "";
+    if (addrEl) addrEl.value = "";
+    if (preview) preview.value = generateWhatsAppMessage("", "", "");
+    showModal(modal);
+  }
+
+  function closeWhatsAppModal() {
+    const modal = document.getElementById("wa-modal");
+    if (!modal) return;
+    hideModal(modal);
+  }
+
+  function handleWaSend() {
+    const name = (document.getElementById("wa-name") || {}).value || "";
+    const phone = (document.getElementById("wa-phone") || {}).value || "";
+    const address = (document.getElementById("wa-address") || {}).value || "";
+    const msg = generateWhatsAppMessage(name.trim(), phone.trim(), address.trim());
+    if (!msg) return alert("Unable to build order message.");
+    const waNumber = "918985562963";
+    const url = `https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`;
+    window.open(url, "_blank");
+    closeWhatsAppModal();
+  }
+
+  // expose to global so inline onclick can call it
+  window.orderViaWhatsApp = openWhatsAppModal;
 };
 
 const MIN_ORDER = 199;
@@ -384,6 +453,64 @@ function init() {
   document.getElementById("cta-direct").addEventListener("click", () => {
     document.getElementById("menu").scrollIntoView({ behavior: "smooth" });
   });
+  // WhatsApp modal controls
+  const waClose = document.getElementById("wa-close");
+  const waCancel = document.getElementById("wa-cancel");
+  const waSend = document.getElementById("wa-send");
+  const waName = document.getElementById("wa-name");
+  const waPhone = document.getElementById("wa-phone");
+  const waAddress = document.getElementById("wa-address");
+  const waPreview = document.getElementById("wa-preview");
+  if (waClose) waClose.addEventListener("click", closeWhatsAppModal);
+  if (waCancel) waCancel.addEventListener("click", closeWhatsAppModal);
+  if (waSend) waSend.addEventListener("click", handleWaSend);
+  // live preview update
+  [waName, waPhone, waAddress].forEach(el => {
+    if (!el) return;
+    el.addEventListener("input", () => {
+      if (!waPreview) return;
+      waPreview.value = generateWhatsAppMessage((waName||{}).value||"", (waPhone||{}).value||"", (waAddress||{}).value||"");
+    });
+  });
+
+  // WhatsApp ordering: generate message from current cart and open wa.me
+  function generateWhatsAppMessage(name = "", phone = "", address = "") {
+    if (!state.cart.length) return "Your cart is empty.";
+    const lines = [];
+    lines.push("Order from Tazty Foodz");
+    if (name) lines.push(`Name: ${name}`);
+    if (phone) lines.push(`Phone: ${phone}`);
+    if (address) lines.push(`Address: ${address}`);
+    lines.push("");
+    lines.push("Items:");
+    state.cart.forEach(item => {
+      lines.push(`${item.qty} x ${item.name} - Rs ${item.price * item.qty}`);
+    });
+    const subtotal = state.cart.reduce((s, i) => s + i.price * i.qty, 0);
+    const delivery = subtotal >= FREE_DELIVERY_THRESHOLD ? 0 : (state.cart.length ? BASE_DELIVERY_FEE : 0);
+    const total = subtotal + delivery;
+    lines.push("");
+    lines.push(`Subtotal: Rs ${subtotal}`);
+    lines.push(`Delivery: Rs ${delivery}`);
+    lines.push(`Total: Rs ${total}`);
+    lines.push("");
+    lines.push("Thanks — please confirm availability and delivery time.");
+    return lines.join("\n");
+  }
+
+  function orderViaWhatsApp() {
+    if (!state.cart.length) {
+      alert("Please add items to the cart before ordering via WhatsApp.");
+      return;
+    }
+    const msg = generateWhatsAppMessage();
+    const encoded = encodeURIComponent(msg);
+    // business number (India) — update if you want a different number
+    const waUrl = `https://wa.me/918985562963?text=${encoded}`;
+    window.open(waUrl, '_blank');
+  }
+
+  window.orderViaWhatsApp = orderViaWhatsApp;
 }
 
 document.addEventListener("DOMContentLoaded", init);
