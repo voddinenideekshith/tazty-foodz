@@ -438,6 +438,85 @@ h1 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
+
+/* Image integration for menu items: consistent square thumbnails, responsive */
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed #f0d7ca;
+}
+.menu-thumb {
+  flex: 0 0 84px;
+  width: 84px;
+  height: 84px;
+  border-radius: 8px;
+  object-fit: cover;
+  display: block;
+  background: #fff;
+  box-shadow: 0 6px 18px rgba(11,27,43,0.05);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+.menu-meta { display:flex; justify-content:space-between; align-items:center; width:100%; gap:12px }
+.menu-meta .name { font-weight:600; color:var(--text); }
+.menu-meta .price { font-weight:800; color:var(--primary-dark); }
+.menu-item:hover .menu-thumb { transform: scale(1.03); box-shadow: 0 12px 28px rgba(11,27,43,0.08); }
+
+/* Mobile: stack image on top, text below for narrow screens */
+@media (max-width: 720px) {
+  .menu-item { flex-direction: column; align-items: flex-start; }
+  .menu-thumb { width:100%; height: auto; aspect-ratio: 1/1; max-height:320px; }
+  .menu-meta { width:100%; }
+}
+
+/* Keep images out of printed copy to save ink/space while keeping structure */
+@media print {
+  .menu-thumb { display:none }
+}
+
+/* WhatsApp modal styles */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(6, 12, 20, 0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease;
+}
+.modal.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+.modal-dialog {
+  width: min(720px, 94vw);
+  background: var(--surface);
+  padding: 1.25rem;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+.modal-close {
+  border: 0;
+  background: transparent;
+  font-size: 1.25rem;
+  float: right;
+  color: var(--muted);
+}
+.modal .field { display: block; margin: 0.6rem 0; }
+.modal .field span { display:block; font-weight:600; margin-bottom:0.35rem; color:var(--muted); }
+.modal input[type="text"], .modal input[type="tel"], .modal textarea {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #ececec;
+  font-size: 0.95rem;
+  resize: vertical;
+}
+.modal-actions { display:flex; gap:0.6rem; justify-content:flex-end; margin-top:0.6rem; }
+.modal textarea[readonly] { background:#fafafa; color:var(--text); }
+
 New
 +21
 -0
